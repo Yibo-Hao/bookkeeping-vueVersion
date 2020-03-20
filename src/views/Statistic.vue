@@ -1,13 +1,14 @@
 <template>
-    <div>staticis</div>
+  <div>
+    统计
+    <Nav />
+  </div>
 </template>
 
 <script lang="ts">
-    export default {
-        name: "Statistic"
-    }
+export default {
+  name: "Statistic"
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

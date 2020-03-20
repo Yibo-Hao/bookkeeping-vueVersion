@@ -1,18 +1,8 @@
 <template>
   <div>
-    nav
-    <hr/>
-    <router-view/>
-    <div>
-      <router-link to="/money">money</router-link>
-      |
-      <router-link to="/labels">labels</router-link>
-      |git
-      <router-link to="/statistic">statistic</router-link>
-    </div>
+    <h1>鲨鱼记账</h1>
+    <router-view />
   </div>
 </template>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
