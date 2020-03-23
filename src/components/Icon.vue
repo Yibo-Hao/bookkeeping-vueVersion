@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import x from "@/assets/icons/labels.svg";
+import x from "@/assets/icons/labels2.svg";
 import y from "@/assets/icons/money.svg";
 import z from "@/assets/icons/statistic.svg";
 console.log(y);
