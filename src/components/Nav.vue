@@ -1,39 +1,45 @@
 <template>
-  <div>
-    <router-link to="/money">
-      <svg>
-        <use xlink:href="#money"></use>
-      </svg>
+  <nav>
+    <router-link to="/money" class="items">
+      <Icon name="money" />
+      记账
     </router-link>
 
-    <router-link to="/labels">
-      <svg>
-        <use xlink:href="#labels"></use>
-      </svg>
-      labels
+    <router-link to="/labels" class="items">
+      <Icon name="labels" />
+      标签
     </router-link>
 
-    <router-link to="/statistic">
-      <svg>
-        <use xlink:href="#statistic"></use>
-      </svg>
-      statistic
+    <router-link to="/statistic" class="items">
+      <Icon name="statistic" />
+      统计
     </router-link>
-  </div>
+  </nav>
 </template>
 
 <script lang="ts">
-import x from "@/assets/icons/labels.svg";
-import y from "@/assets/icons/money.svg";
-import z from "@/assets/icons/statistic.svg";
-
-console.log(y);
-console.log(x);
-console.log(z);
-
 export default {
   name: "Nav"
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+nav {
+  display: flex;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  flex-direction: row;
+  font-size: 12px;
+  > .items {
+    padding: 2px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow:1;
+    flex-direction: column;
+    .icon{
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
+</style>
