@@ -30,13 +30,13 @@ nav {
   flex-direction: row;
   font-size: 12px;
   > .items {
-    opacity: 0.75;
     padding: 2px 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-grow: 1;
     flex-direction: column;
+    color: #707070;
     .icon {
       width: 32px;
       height: 32px;
