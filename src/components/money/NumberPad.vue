@@ -5,11 +5,11 @@
       <button @click="inputContent">7</button>
       <button @click="inputContent">8</button>
       <button @click="inputContent">9</button>
-      <button @click="add">+</button>
+      <button @click="count">+</button>
       <button @click="inputContent">4</button>
       <button @click="inputContent">5</button>
       <button @click="inputContent">6</button>
-      <button @click="minus">-</button>
+      <button @click="count">-</button>
       <button @click="inputContent">1</button>
       <button @click="inputContent">2</button>
       <button @click="inputContent">3</button>
@@ -57,39 +57,20 @@ export default class NumberPad extends Vue {
       this.output = this.output.substring(0, this.output.length - 1);
     }
   }
-  add() {
-    if (
-      this.output[this.output.length - 1] === "-" ||
-      this.output[this.output.length - 1] === "+"
-    ) {
-      return;
-    } else {
-      this.output = this.output + "+";
+
+  count(event: MouseEvent) {
+    const button = event.target as HTMLButtonElement;
+    const input = button.textContent as string;
+    const countType: object = {
+      '+': "+",
+      '-': "-"
+    };
+    if (this.output[this.output.length - 1] in countType){
+      return
+    }else{
+      this.output = this.output + input;
     }
   }
-  minus() {
-    if (
-      this.output[this.output.length - 1] === "-" ||
-      this.output[this.output.length - 1] === "+"
-    ) {
-      return;
-    } else {
-      this.output = this.output + "-";
-    }
-  }
-  // count(event: MouseEvent) {
-  //   const button = event.target as HTMLButtonElement;
-  //   const input = button.textContent as string;
-  //   const countType: object = {
-  //     '+': "+",
-  //     '-': "-"
-  //   };
-  //   if (this.output[this.output.length - 1] in countType){
-  //     return
-  //   }else{
-  //     this.output = this.output + input;
-  //   }
-  // }
 }
 </script>
 
