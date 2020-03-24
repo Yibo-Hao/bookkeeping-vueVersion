@@ -13,11 +13,13 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
 
 @Component
 export default class Types extends Vue {
   type = "-";
+  @Prop(Number) propA: number | undefined;
+
   selectedType(type: string) {
     if (type !== "-" && type !== "+") {
       throw new Error("type is unknown");
@@ -25,18 +27,6 @@ export default class Types extends Vue {
     this.type = type;
   }
 }
-// export default {
-//   name: "Types",
-//   data() {
-//     return {
-//       type: "-"
-//     };
-//   },
-//   methods: {
-//
-//     }
-//   }
-// };
 </script>
 
 <style lang="scss" scoped>
@@ -45,6 +35,10 @@ export default class Types extends Vue {
   background: #c4c4c4;
   display: flex;
   font-size: 24px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
   li {
     width: 50%;
     padding: 10px 16px;
