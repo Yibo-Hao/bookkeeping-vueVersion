@@ -32,7 +32,7 @@ export default class Types extends Vue {
 <style lang="scss" scoped>
 @import "src/assets/style/helper.scss";
 .types {
-  background: #c4c4c4;
+  background: #f5f5f5;
   display: flex;
   font-size: 24px;
   position: absolute;

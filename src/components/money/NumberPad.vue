@@ -1,30 +1,96 @@
 <template>
   <div class="numberPad">
-    <div class="output">0.00</div>
+    <div class="output">{{ output }}</div>
     <div class="buttons">
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
-      <button>+</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button>-</button>
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
+      <button @click="inputContent">7</button>
+      <button @click="inputContent">8</button>
+      <button @click="inputContent">9</button>
+      <button @click="add">+</button>
+      <button @click="inputContent">4</button>
+      <button @click="inputContent">5</button>
+      <button @click="inputContent">6</button>
+      <button @click="minus">-</button>
+      <button @click="inputContent">1</button>
+      <button @click="inputContent">2</button>
+      <button @click="inputContent">3</button>
       <button class="ok">完成</button>
-      <button class="zero">.</button>
-      <button>0</button>
-      <button>删除icon</button>
+      <button @click="inputContent">.</button>
+      <button @click="inputContent">0</button>
+      <button @click="remove"><Icon name="delete" /></button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-export default {
-  name: "NumberPad"
-};
+import Vue from "vue";
+import { Component } from "vue-property-decorator";
+
+@Component
+export default class NumberPad extends Vue {
+  output = "0";
+  inputContent(event: MouseEvent) {
+    if (this.output.length >= 14) {
+      return;
+    }
+    if (event.target) {
+      const button = event.target as HTMLButtonElement;
+      const input = button.textContent as string;
+      if (this.output === "0") {
+        if (input === ".") {
+          this.output = "0.";
+        } else if ("0123456789".indexOf(input) >= 0) {
+          this.output = input;
+        } else {
+          this.output += input;
+        }
+        return;
+      } else if (this.output.indexOf(".") >= 0 && input === ".") {
+        return;
+      }
+      this.output += input;
+    }
+  }
+  remove() {
+    if (this.output.length === 1) {
+      this.output = "0";
+    } else {
+      this.output = this.output.substring(0, this.output.length - 1);
+    }
+  }
+  add() {
+    if (
+      this.output[this.output.length - 1] === "-" ||
+      this.output[this.output.length - 1] === "+"
+    ) {
+      return;
+    } else {
+      this.output = this.output + "+";
+    }
+  }
+  minus() {
+    if (
+      this.output[this.output.length - 1] === "-" ||
+      this.output[this.output.length - 1] === "+"
+    ) {
+      return;
+    } else {
+      this.output = this.output + "-";
+    }
+  }
+  // count(event: MouseEvent) {
+  //   const button = event.target as HTMLButtonElement;
+  //   const input = button.textContent as string;
+  //   const countType: object = {
+  //     '+': "+",
+  //     '-': "-"
+  //   };
+  //   if (this.output[this.output.length - 1] in countType){
+  //     return
+  //   }else{
+  //     this.output = this.output + input;
+  //   }
+  // }
+}
 </script>
 
 <style lang="scss" scoped>
