@@ -1,6 +1,6 @@
 <template>
   <div class="numberPad">
-    <div class="output">{{ output }}</div>
+    <div class="output">{{  output }}</div>
     <div class="buttons">
       <button @click="inputContent">7</button>
       <button @click="inputContent">8</button>
@@ -13,9 +13,9 @@
       <button @click="inputContent">1</button>
       <button @click="inputContent">2</button>
       <button @click="inputContent">3</button>
-      <router-link to="/statistic">
+
         <button class="ok" @click="ok">完成</button>
-      </router-link>
+
       <button @click="inputContent">.</button>
       <button @click="inputContent">0</button>
       <button @click="remove"><Icon name="delete" /></button>
@@ -25,11 +25,12 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
 
 @Component
 export default class NumberPad extends Vue {
-  output = "0";
+  @Prop() readonly value!: number;
+  output = this.value.toString();
   inputContent(event: MouseEvent) {
     if (this.output.length >= 14) {
       return;
@@ -74,7 +75,7 @@ export default class NumberPad extends Vue {
     }
   }
   ok() {
-    this.$emit("update:value", this.output);
+    this.$emit("update:value", parseFloat(this.output));
   }
 }
 </script>
