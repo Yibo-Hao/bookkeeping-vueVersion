@@ -15,7 +15,7 @@ import Types from "@/components/money/Types.vue";
 import Notes from "@/components/money/Notes.vue";
 import Tags from "@/components/money/Tags.vue";
 import Vue from "vue";
-import {Component, Watch} from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
 
 type Record = {
   tag: string;
@@ -41,12 +41,12 @@ export default class Money extends Vue {
     this.record.tag = value;
   }
   saveRecord() {
-    this.recordList.push(this.record)
-
+    const recordFake = JSON.parse(JSON.stringify(this.record));
+    this.recordList.push(recordFake);
   }
-  @Watch('recordList')
-  onRecordChange(){
-    window.localStorage.setItem('recordList',JSON.stringify(this.recordList))
+  @Watch("recordList")
+  onRecordChange() {
+    window.localStorage.setItem("recordList", JSON.stringify(this.recordList));
   }
 }
 </script>
