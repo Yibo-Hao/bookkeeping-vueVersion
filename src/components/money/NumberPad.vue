@@ -13,7 +13,9 @@
       <button @click="inputContent">1</button>
       <button @click="inputContent">2</button>
       <button @click="inputContent">3</button>
-      <button class="ok">完成</button>
+      <router-link to="/statistic">
+        <button class="ok" @click="ok">完成</button>
+      </router-link>
       <button @click="inputContent">.</button>
       <button @click="inputContent">0</button>
       <button @click="remove"><Icon name="delete" /></button>
@@ -62,14 +64,17 @@ export default class NumberPad extends Vue {
     const button = event.target as HTMLButtonElement;
     const input = button.textContent as string;
     const countType: object = {
-      '+': "+",
-      '-': "-"
+      "+": "+",
+      "-": "-"
     };
-    if (this.output[this.output.length - 1] in countType){
-      return
-    }else{
+    if (this.output[this.output.length - 1] in countType) {
+      return;
+    } else {
       this.output = this.output + input;
     }
+  }
+  ok() {
+    this.$emit("update:value", this.output);
   }
 }
 </script>

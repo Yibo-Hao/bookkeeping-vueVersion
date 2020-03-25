@@ -31,6 +31,7 @@ export default class Tags extends Vue {
     } else {
       this.selectedTags.splice(0, 1, tag);
     }
+    this.$emit('update:value',this.selectedTags[0])
   }
   creat() {
     const name = window.prompt("输入标签名");
@@ -39,7 +40,6 @@ export default class Tags extends Vue {
     } else {
       if (this.dataSource) {
         this.$emit("update:dataSource", [...this.dataSource, name]);
-        console.log(name);
       }
     }
   }
