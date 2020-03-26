@@ -5,12 +5,12 @@
     </div>
     <ul class="current">
       <li
-        v-for="tag in dataSource"
-        :key="tag"
-        :class="selectedTags.indexOf(tag) >= 0 && 'selected'"
-        @click="select(tag)"
+        v-for="tag in tags"
+        :key="tag.id"
+        :class="selectedTags.indexOf(tag.name) >= 0 && 'selected'"
+        @click="select(tag.name)"
       >
-        {{ tag }}
+        {{ tag.name }}
       </li>
     </ul>
   </div>
@@ -18,11 +18,12 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
+import tagListModel from "@/models/tagslistmodel";
+import { Component } from "vue-property-decorator";
 
 @Component
 export default class Tags extends Vue {
-  @Prop(Array) dataSource: string[] | undefined;
+  tags = tagListModel.data;
   selectedTags: string[] = [];
 
   select(tag: string) {
@@ -31,17 +32,12 @@ export default class Tags extends Vue {
     } else {
       this.selectedTags.splice(0, 1, tag);
     }
-    this.$emit('update:value',this.selectedTags[0])
+    this.$emit("update:value", this.selectedTags[0]);
   }
   create() {
     const name = window.prompt("输入标签名");
-    if (name === "") {
-      window.alert("标签不能为空");
-    } else {
-      if (this.dataSource) {
-        this.$emit("update:dataSource", [...this.dataSource, name]);
-      }
-    }
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    tagListModel.create(name!);
   }
 }
 </script>

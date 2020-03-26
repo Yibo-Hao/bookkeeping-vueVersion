@@ -1,8 +1,11 @@
 const localStorageKeyName = "tagList";
-
+type Tag = {
+  id: string;
+  name: string;
+};
 type TagsListModel = {
-  data: string[];
-  fetch: () => string[];
+  data: Tag[];
+  fetch: () => Tag[];
   create: (name: string) => string | void;
   save: () => void;
 };
@@ -11,7 +14,7 @@ const tagListModel: TagsListModel = {
   fetch() {
     this.data = JSON.parse(
       window.localStorage.getItem(localStorageKeyName) ||
-        '["衣","食","住","行"]'
+        '[{"id":"衣","name":"衣"},{"id":"食","name":"食"},{"id":"住","name":"住"},{"id":"行","name":"行"}]'
     );
     return this.data;
   },
@@ -19,7 +22,10 @@ const tagListModel: TagsListModel = {
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
   },
   create(name: string) {
-    if (this.data.indexOf(name) !== -1) {
+    const names = this.data.map(item => {
+      return item.name;
+    });
+    if (names.indexOf(name) !== -1) {
       window.alert("标签不能重复~");
       return "重复";
     } else if (name === "") {
@@ -28,7 +34,7 @@ const tagListModel: TagsListModel = {
     } else if (name === null) {
       return "用户取消了";
     } else {
-      this.data.push(name);
+      this.data.push({id: name,name: name});
       this.save();
       return "成功";
     }
