@@ -17,7 +17,18 @@ import Tags from "@/components/money/Tags.vue";
 import Vue from "vue";
 import { Component, Watch } from "vue-property-decorator";
 
-window.localStorage.setItem("version", "1.0");
+const version = window.localStorage.getItem("version") || "0";
+const recordList: Record[] = JSON.parse(
+  window.localStorage.getItem("recordList") || "[]"
+);
+if (version === "0.0.1") {
+  recordList.forEach(record => {
+    record.createAt = new Date(2020, 0, 1);
+  });
+  window.localStorage.setItem("recordList", JSON.stringify(recordList));
+}
+
+window.localStorage.setItem("version", "0.0.2");
 
 type Record = {
   tag: string;
