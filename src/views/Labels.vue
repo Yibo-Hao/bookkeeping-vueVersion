@@ -28,11 +28,8 @@ export default class Labels extends Vue {
 
   createTag() {
     const name = window.prompt("请输入标签名");
-    if (name) {
-      tagListModel.create(name);
-    } else {
-      window.alert("不能为空");
-    }
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    tagListModel.create(name!);
   }
 }
 </script>
