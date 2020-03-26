@@ -17,11 +17,14 @@ import Tags from "@/components/money/Tags.vue";
 import Vue from "vue";
 import { Component, Watch } from "vue-property-decorator";
 
+window.localStorage.setItem("version", "1.0");
+
 type Record = {
   tag: string;
   notes: string;
   type: string;
   amount: number;
+  createAt?: Date;
 };
 
 @Component({
@@ -30,7 +33,7 @@ type Record = {
 export default class Money extends Vue {
   tags = ["衣", "食", "住", "行"];
   recordList: Record[] = JSON.parse(
-    window.localStorage.getItem("recordList") || '[]'
+    window.localStorage.getItem("recordList") || "[]"
   );
   record: Record = {
     tag: "住",
@@ -43,7 +46,8 @@ export default class Money extends Vue {
     this.record.tag = value;
   }
   saveRecord() {
-    const recordFake = JSON.parse(JSON.stringify(this.record));
+    const recordFake: Record = JSON.parse(JSON.stringify(this.record));
+    recordFake.createAt = new Date();
     this.recordList.push(recordFake);
   }
   @Watch("recordList")
