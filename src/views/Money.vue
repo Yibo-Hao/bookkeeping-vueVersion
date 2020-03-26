@@ -16,10 +16,14 @@ import Notes from "@/components/money/Notes.vue";
 import Tags from "@/components/money/Tags.vue";
 import Vue from "vue";
 import { Component, Watch } from "vue-property-decorator";
-import model from "@/model";
+import recordlistmodel from "@/models/recordlistmodel";
+import tagListModel from "@/models/tagslistmodel";
 
 const version = window.localStorage.getItem("version") || "0";
-const recordList = model.fetch();
+
+const recordList = recordlistmodel.fetch();
+const tagList = tagListModel.fetch();
+
 if (version === "0.0.1") {
   recordList.forEach(record => {
     record.createAt = new Date(2020, 0, 1);
@@ -33,7 +37,7 @@ window.localStorage.setItem("version", "0.0.2");
   components: { Tags, Notes, Types, NumberPad }
 })
 export default class Money extends Vue {
-  tags = ["衣", "食", "住", "行"];
+  tags = tagList;
   recordList: RecordItem[] = JSON.parse(
     window.localStorage.getItem("recordList") || "[]"
   );
@@ -48,14 +52,14 @@ export default class Money extends Vue {
     this.record.tag = value;
   }
   saveRecord() {
-    const recordFake: RecordItem = model.clone(this.record);
+    const recordFake: RecordItem = recordlistmodel.clone(this.record);
     recordFake.createAt = new Date();
     this.recordList.push(recordFake);
     //监听ok，会接受一个record，push进rL,从而引起watch
   }
   @Watch("recordList")
   onRecordChange() {
-    model.save(recordList);
+    recordlistmodel.save(recordList);
     //监听rL一旦变化就push进数据库
   }
 }

@@ -9,10 +9,12 @@ import x from "@/assets/icons/labels2.svg";
 import y from "@/assets/icons/money.svg";
 import z from "@/assets/icons/statistic.svg";
 import m from "@/assets/icons/delete.svg";
+import n from "@/assets/icons/right.svg";
 console.log(y);
 console.log(x);
 console.log(z);
 console.log(m);
+console.log(n);
 
 export default {
   name: "icons",
