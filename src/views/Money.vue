@@ -3,7 +3,9 @@
     <Layout classPrefix="layout">
       <NumberPad :value.sync="record.amount" @submit="saveRecord" />
       <Types :type.sync="record.type" />
-      <Notes :value.sync="record.notes" />
+      <div class="noteWrapper">
+        <Notes :value.sync="record.notes" :field-name="'备注'" />
+      </div>
       <Tags :data-source.sync="tags" @update:value="onUpdateTag" />
     </Layout>
   </div>
@@ -22,7 +24,6 @@ import tagListModel from "@/models/tagslistmodel";
 const version = window.localStorage.getItem("version") || "0";
 
 const recordList = recordlistmodel.fetch();
-const tagList = tagListModel.fetch();
 
 if (version === "0.0.1") {
   recordList.forEach(record => {
@@ -37,10 +38,8 @@ window.localStorage.setItem("version", "0.0.2");
   components: { Tags, Notes, Types, NumberPad }
 })
 export default class Money extends Vue {
-  tags = tagList;
-  recordList: RecordItem[] = JSON.parse(
-    window.localStorage.getItem("recordList") || "[]"
-  );
+  tags = tagListModel.fetch();
+  recordList = recordlistmodel.fetch();
   record: RecordItem = {
     tag: "住",
     notes: "",
@@ -69,5 +68,8 @@ export default class Money extends Vue {
 .layout-content {
   display: flex;
   flex-direction: column-reverse;
+}
+.noteWrapper {
+  background: #f5f5f5;
 }
 </style>

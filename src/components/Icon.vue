@@ -10,11 +10,17 @@ import y from "@/assets/icons/money.svg";
 import z from "@/assets/icons/statistic.svg";
 import m from "@/assets/icons/delete.svg";
 import n from "@/assets/icons/right.svg";
-console.log(y);
-console.log(x);
-console.log(z);
-console.log(m);
-console.log(n);
+import zz from "@/assets/icons/back.svg";
+
+
+const iconss: object = {
+  zz,
+  x,
+  y,
+  z,
+  m,
+  n
+};
 
 export default {
   name: "icons",
