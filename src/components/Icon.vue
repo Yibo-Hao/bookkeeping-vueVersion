@@ -13,6 +13,7 @@ import n from "@/assets/icons/right.svg";
 import zz from "@/assets/icons/back.svg";
 
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const iconss: object = {
   zz,
   x,

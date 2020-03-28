@@ -1,14 +1,5 @@
 const localStorageKeyName = "tagList";
-type Tag = {
-  id: string;
-  name: string;
-};
-type TagsListModel = {
-  data: Tag[];
-  fetch: () => Tag[];
-  create: (name: string) => string | void;
-  save: () => void;
-};
+
 const tagListModel: TagsListModel = {
   data: [],
   fetch() {
@@ -34,7 +25,7 @@ const tagListModel: TagsListModel = {
     } else if (name === null) {
       return "用户取消了";
     } else {
-      this.data.push({id: name,name: name});
+      this.data.push({ id: name, name: name });
       this.save();
       return "成功";
     }

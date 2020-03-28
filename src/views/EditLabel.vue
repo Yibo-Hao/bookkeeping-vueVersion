@@ -6,7 +6,7 @@
       <span class="rightIcon"></span>
     </div>
     <div class="formWrapper">
-      <Notes field-name="备注" />
+      <Notes field-name="标签名" :place-holder="tag.name"/>
     </div>
     <Button>删除标签</Button>
   </Layout>
@@ -18,17 +18,20 @@ import { Component } from "vue-property-decorator";
 import tagListModel from "@/models/tagslistmodel";
 import Notes from "@/components/money/Notes.vue";
 import Button from "@/components/Button.vue";
+
+
 @Component({
   components: { Button, Notes }
 })
 export default class EditLabel extends Vue {
+  tag?: Tag = undefined;
   created() {
     const id = this.$route.params.id;
     tagListModel.fetch;
     const tags = tagListModel.data;
-    const tag = tags.filter(t => t.id === id)[0];
+    const tag = tags.filter(tag => tag.id === id)[0];
     if (tag) {
-      console.log(id);
+      this.tag = tag
     } else {
       this.$router.replace("/404");
     }
@@ -53,6 +56,5 @@ export default class EditLabel extends Vue {
 .formWrapper {
   background: #ffffe6;
   margin-top: 10px;
-
 }
 </style>

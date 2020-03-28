@@ -2,7 +2,7 @@
   <div>
     <label class="notes">
       <span class="name">{{this.fieldName}}:</span>
-      <input type="text" v-model="valueInside" :placeholder="`写点${fieldName}吧~`" />
+      <input type="text" v-model="valueInside" :placeholder ="placeHolder" />
     </label>
   </div>
 </template>
@@ -13,8 +13,10 @@ import { Component, Prop, Watch } from "vue-property-decorator";
 
 @Component
 export default class Notes extends Vue {
-  @Prop() readonly value!: string;
+  @Prop({default:''}) readonly value!: string;
   @Prop({required:true}) readonly fieldName!: string;
+  @Prop({required:true}) readonly placeHolder!: string;
+
   valueInside = this.value;
   @Watch("valueInside")
   onValueChanged(valueInside: string) {
