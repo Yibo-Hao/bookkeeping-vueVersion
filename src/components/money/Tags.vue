@@ -23,7 +23,7 @@ import { Component } from "vue-property-decorator";
 
 @Component
 export default class Tags extends Vue {
-  tags = tagListModel.data;
+  tags = tagListModel.fetch();
   selectedTags: string[] = [];
 
   select(tag: string) {

@@ -1,8 +1,8 @@
-window.localStorage.setItem("idMax", '4');
-let id: number = parseInt(window.localStorage.getItem("idMax") || "0") || 0;
+let id: number = parseInt(window.localStorage.getItem("idMax") || "4") || 4;
 
 function createId() {
   id++;
+  window.localStorage.setItem("idMax", id.toString());
   return id;
 }
 

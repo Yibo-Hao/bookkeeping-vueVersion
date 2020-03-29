@@ -23,7 +23,6 @@ import { Component } from "vue-property-decorator";
 import tagListModel from "@/models/tagslistmodel";
 import Notes from "@/components/money/Notes.vue";
 import Button from "@/components/Button.vue";
-
 @Component({
   components: { Button, Notes }
 })
