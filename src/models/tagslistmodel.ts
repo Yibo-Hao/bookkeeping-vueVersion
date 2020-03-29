@@ -1,11 +1,12 @@
-const localStorageKeyName = "tagList";
+import createId from "@/lib/idCreator.ts";
 
+const localStorageKeyName = "tagList";
 const tagListModel: TagsListModel = {
   data: [],
   fetch() {
     this.data = JSON.parse(
       window.localStorage.getItem(localStorageKeyName) ||
-        '[{"id":"衣","name":"衣"},{"id":"食","name":"食"},{"id":"住","name":"住"},{"id":"行","name":"行"}]'
+        '[{"id":"1","name":"衣"},{"id":"2","name":"食"},{"id":"3","name":"住"},{"id":"4","name":"行"}]'
     );
     return this.data;
   },
@@ -25,10 +26,41 @@ const tagListModel: TagsListModel = {
     } else if (name === null) {
       return "用户取消了";
     } else {
-      this.data.push({ id: name, name: name });
+      const id = createId().toString();
+      this.data.push({ id:id, name: name });
       this.save();
+
       return "成功";
     }
+  },
+  update(id, name) {
+    const idList = this.data.map(item => item.id);
+    if (idList.indexOf(id) >= 0) {
+      const names = this.data.map(item => item.name);
+      if (names.indexOf(name) >= 0) {
+        return "duplicated";
+      } else {
+        const tag = this.data.filter(item => item.id === id)[0];
+        tag.name = name;
+        tag.id = name;
+        this.save();
+        return "success";
+      }
+    } else {
+      return "notfound";
+    }
+  },
+  destory(id: string) {
+    let index = -1;
+    for (let i = 0; i < this.data.length; i++) {
+      if (this.data[i].id === id) {
+        index = i;
+        break;
+      }
+    }
+    this.data.splice(index, 1);
+    this.save();
+    return true;
   }
 };
 export default tagListModel;
