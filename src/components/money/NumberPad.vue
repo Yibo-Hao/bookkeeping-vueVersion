@@ -13,9 +13,7 @@
       <button @click="inputContent">1</button>
       <button @click="inputContent">2</button>
       <button @click="inputContent">3</button>
-
       <button class="ok" @click="ok">完成</button>
-
       <button @click="inputContent">.</button>
       <button @click="inputContent">0</button>
       <button @click="remove"><Icon name="delete" /></button>
@@ -75,9 +73,16 @@ export default class NumberPad extends Vue {
     }
   }
   ok() {
-    this.output = eval(this.output).toString();
+    try {
+      this.output = eval(this.output).toString();
+    }catch (e) {
+      window.alert('输入正确的金额~');
+      this.output = '0';
+      return
+    }
+
     this.$emit("update:value", parseFloat(this.output));
-    this.$emit("submit", parseFloat(this.output));
+    this.$emit("submit");
     this.output = '0'
   }
 }
