@@ -3,13 +3,17 @@
     <Layout>
       <div class="tags">
         <div class="head"></div>
-        <router-link v-for="tag in tags" :key="tag.id" class="li"
-        :to=" `/labels/edit/${tag.id}` ">
+        <router-link
+          v-for="tag in tags"
+          :key="tag.id"
+          class="li"
+          :to="`/labels/edit/${tag.id}`"
+        >
           <span>{{ tag.name }}</span>
           <Icon :name="'right'" />
         </router-link>
       </div>
-        <Button @click.native="createTag">新建标签</Button>
+      <Button @click.native="createTag">新建标签</Button>
     </Layout>
   </div>
 </template>
@@ -17,19 +21,22 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import tagListModel from "@/models/tagslistmodel";
 import Button from "@/components/Button.vue";
+import store from "@/store";
 
 @Component({
-  components: {Button}
+  components: { Button }
 })
 export default class Labels extends Vue {
-  tags = tagListModel.fetch();
-
+  get tags() {
+    return this.$store.state.taglist;
+  }
   createTag() {
-    const name = window.prompt("请输入标签名");
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    tagListModel.create(name!);
+    const name = window.prompt("请输入标签名") as string;
+    this.$store.commit("create", name);
+  }
+  created() {
+    store.commit("fetchTags");
   }
 }
 </script>
@@ -55,5 +62,4 @@ export default class Labels extends Vue {
     padding-right: 10px;
   }
 }
-
 </style>

@@ -18,14 +18,14 @@
 
 <script lang="ts">
 import Vue from "vue";
-import tagListModel from "@/models/tagslistmodel";
 import { Component } from "vue-property-decorator";
 
 @Component
 export default class Tags extends Vue {
-  tags = tagListModel.fetch();
+  get tags() {
+    return this.$store.state.taglist;
+  }
   selectedTags: string[] = [];
-
   select(tag: string) {
     if (this.selectedTags.indexOf(tag) >= 0) {
       this.selectedTags.splice(this.selectedTags.indexOf(tag), 1);
@@ -36,9 +36,11 @@ export default class Tags extends Vue {
   }
   create() {
     const name = window.prompt("输入标签名");
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    tagListModel.create(name!);
+    this.$store.commit('create',name);
   }
+  created(){
+    this.$store.commit('fetchTags')
+}
 }
 </script>
 

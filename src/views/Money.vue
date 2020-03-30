@@ -22,10 +22,7 @@ import Notes from "@/components/money/Notes.vue";
 import Tags from "@/components/money/Tags.vue";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import tagListModel from "@/models/tagslistmodel";
 import store from "@/store";
-
-tagListModel.fetch();
 
 const version = window.localStorage.getItem("version") || "0";
 
@@ -65,7 +62,8 @@ export default class Money extends Vue {
     store.commit("saveRecord",this.record);
   }
   created() {
-    store.commit("fetch");
+    store.commit("fetchRecords");
+    store.commit("fetchTags");
   }
 
 }
