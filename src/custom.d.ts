@@ -5,15 +5,15 @@ type RecordItem = {
     amount: number;
     createAt?: Date;
 };
-type RecordListModel = {
-    data: RecordItem[];
-    clone: (data: RecordItem) => RecordItem;
-    fetch: () => RecordItem[];
-    // create: (name: string) => string | void;
-    save: () => void;
-    // update: (id: string,name: string) => 'success'|'notfound'|'duplicated';
-    // destory: (id: string) => boolean;
-};
+// type RecordListModel = {
+//     data: RecordItem[];
+//     clone: (data: RecordItem) => RecordItem;
+//     fetch: () => RecordItem[];
+//     // create: (name: string) => string | void;
+//     save: () => void;
+//     // update: (id: string,name: string) => 'success'|'notfound'|'duplicated';
+//     // destory: (id: string) => boolean;
+// };
 
 
 type Tag = {

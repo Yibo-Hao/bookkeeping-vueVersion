@@ -1,7 +1,7 @@
 <template>
   <div>
     <Layout classPrefix="layout">
-      <NumberPad :value.sync="record.amount" @submit="saveRecord" />
+      <NumberPad :value.sync="record.amount" @submit="saverecord" />
       <Types :type.sync="record.type" />
       <div class="noteWrapper">
         <Notes
@@ -22,44 +22,52 @@ import Notes from "@/components/money/Notes.vue";
 import Tags from "@/components/money/Tags.vue";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import recordlistmodel from "@/models/recordlistmodel";
 import tagListModel from "@/models/tagslistmodel";
+import store from "@/store";
 
 tagListModel.fetch();
 
 const version = window.localStorage.getItem("version") || "0";
-const recordList = recordlistmodel.fetch();
+
 /*version*/
 if (version === "0.0.1") {
-  recordList.forEach(record => {
+  store.state.recordlist.forEach(record => {
     record.createAt = new Date(2020, 0, 1);
   });
-  window.localStorage.setItem("recordList", JSON.stringify(recordList));
+  window.localStorage.setItem(
+    "recordList",
+    JSON.stringify(store.state.recordlist)
+  );
 }
 window.localStorage.setItem("version", "0.0.2");
 /*version*/
 
 @Component({
-  components: { Tags, Notes, Types, NumberPad }
+  components: { Tags, Notes, Types, NumberPad },
+  computed: {
+    recordlist() {
+      return this.$store.state.recordlist;
+    }
+  }
 })
 export default class Money extends Vue {
-  recordList = recordlistmodel.fetch();
   record: RecordItem = {
     tag: "住",
     notes: "",
     type: "-",
     amount: 0
   };
-
+// 除去tag之外其他的直接同步
   onUpdateTag(value: string) {
     this.record.tag = value;
   }
-  saveRecord() {
-    const recordFake: RecordItem = recordlistmodel.clone(this.record);
-    recordFake.createAt = new Date();
-    this.recordList.push(recordFake);
-    recordlistmodel.save();
+  saverecord() {
+    store.commit("saveRecord",this.record);
   }
+  created() {
+    store.commit("fetch");
+  }
+
 }
 </script>
 
