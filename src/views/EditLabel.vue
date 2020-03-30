@@ -28,7 +28,6 @@ import Creator from "@/mixins/Creator.vue";
 })
 export default class EditLabel extends mixins(Creator) {
   tag?: Tag = undefined;
-
   created() {
     const id = this.$route.params.id;
     const tag = this.tags.filter((e: Tag) => e.id === id)[0];

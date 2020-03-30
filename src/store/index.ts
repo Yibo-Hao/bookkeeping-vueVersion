@@ -81,7 +81,6 @@ const store = new Vuex.Store({
       }
       state.taglist.splice(index, 1);
       store.commit("save2");
-      return true;
     }
   }
 });
