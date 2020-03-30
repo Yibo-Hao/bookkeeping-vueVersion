@@ -19,25 +19,16 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Button from "@/components/Button.vue";
-import store from "@/store";
+import {mixins} from "vue-class-component";
+import Creator from "@/mixins/Creator.vue";
 
 @Component({
   components: { Button }
 })
-export default class Labels extends Vue {
-  get tags() {
-    return this.$store.state.taglist;
-  }
-  createTag() {
-    const name = window.prompt("请输入标签名") as string;
-    this.$store.commit("create", name);
-  }
-  created() {
-    store.commit("fetchTags");
-  }
+export default class Labels extends mixins(Creator) {
+
 }
 </script>
 

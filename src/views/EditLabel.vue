@@ -18,20 +18,18 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Notes from "@/components/money/Notes.vue";
 import Button from "@/components/Button.vue";
+import {mixins} from "vue-class-component";
+import Creator from "@/mixins/Creator.vue";
 @Component({
   components: { Button, Notes },
 })
-export default class EditLabel extends Vue {
+export default class EditLabel extends mixins(Creator) {
   tag?: Tag = undefined;
-  get tags() {
-    return this.$store.state.taglist;
-  }
+
   created() {
-    this.$store.commit('fetchTags');
     const id = this.$route.params.id;
     const tag = this.tags.filter((e: Tag) => e.id === id)[0];
     if (tag) {

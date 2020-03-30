@@ -1,7 +1,7 @@
 <template>
   <div class="tags">
     <div class="new">
-      <button @click="create">新增标签</button>
+      <button @click="createTag">新增标签</button>
     </div>
     <ul class="current">
       <li
@@ -17,14 +17,13 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import { Component } from "vue-property-decorator";
+import {mixins} from "vue-class-component";
+import Creator from "@/mixins/Creator.vue";
 
 @Component
-export default class Tags extends Vue {
-  get tags() {
-    return this.$store.state.taglist;
-  }
+export default class Tags extends mixins(Creator) {
+
   selectedTags: string[] = [];
   select(tag: string) {
     if (this.selectedTags.indexOf(tag) >= 0) {
@@ -34,13 +33,7 @@ export default class Tags extends Vue {
     }
     this.$emit("update:value", this.selectedTags[0]);
   }
-  create() {
-    const name = window.prompt("输入标签名");
-    this.$store.commit('create',name);
-  }
-  created(){
-    this.$store.commit('fetchTags')
-}
+
 }
 </script>
 
