@@ -1,14 +1,11 @@
 <template>
-  <div class="typesWrapper">
-    <ul class="types">
-      <li :class="type === '-' ? 'selected' : ''" @click="selectedType('-')">
-        支出
-      </li>
-      <li :class="type === '+' ? 'selected' : ''" @click="selectedType('+')">
-        收入
-      </li>
-    </ul>
-  </div>
+  <ul class="tabs">
+    <li v-for="item in datasource" :key="item.value" @click="select(item)"
+      :class="item.value === data ? 'selected' : '' "
+    >
+      {{ item.text }}
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
@@ -16,30 +13,31 @@ import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 
 @Component
-export default class Types extends Vue {
-  @Prop(String) readonly type!: string;
-  selectedType(type: string) {
-    if (type !== "-" && type !== "+") {
-      throw new Error("type is unknown");
+export default class Tabs extends Vue {
+  @Prop({ required: true }) readonly data!: string;
+  datasource: DataSource[] = [
+    { text: "日", value: "day" },
+    { text: "周", value: "week" },
+    { text: "月", value: "mouth" }
+  ];
+  select(item: DataSource) {
+    if (item.value !== this.data) {
+      this.$emit("update:data", item.value);
     }
-    this.$emit('update:type',type)
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
 @import "src/assets/style/helper.scss";
-.types {
+.tabs {
   background: #f5f5f5;
   display: flex;
-  font-size: 24px;
-  position: absolute;
-  top: 0;
-  left: 0;
+  font-size: 16px;
+  position: relative;
   width: 100vw;
   li {
-    width: 50%;
+    flex-grow: 1;
     padding: 10px 16px;
     display: flex;
     justify-content: center;

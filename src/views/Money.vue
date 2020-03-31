@@ -24,9 +24,8 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import store from "@/store";
 
-const version = window.localStorage.getItem("version") || "0";
-
 /*version*/
+const version = window.localStorage.getItem("version") || "0";
 if (version === "0.0.1") {
   store.state.recordlist.forEach(record => {
     record.createAt = new Date(2020, 0, 1);
