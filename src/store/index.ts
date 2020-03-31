@@ -23,7 +23,7 @@ const store = new Vuex.Store({
     },
     saveRecord(state, record: RecordItem) {
       const recordFake: RecordItem = JSON.parse(JSON.stringify(record));
-      recordFake.createAt = new Date();
+      recordFake.createAt = new Date().toISOString();
       state.recordlist.push(recordFake);
       store.commit("save");
     },

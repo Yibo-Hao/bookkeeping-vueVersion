@@ -22,9 +22,8 @@ export default class Types extends Vue {
     if (type !== "-" && type !== "+") {
       throw new Error("type is unknown");
     }
-    this.$emit('update:type',type)
+    this.$emit("update:type", type);
   }
-
 }
 </script>
 
@@ -45,6 +44,7 @@ export default class Types extends Vue {
     justify-content: center;
     align-items: center;
     position: relative;
+    flex-direction: column;
     &.selected::after {
       content: "";
       position: absolute;

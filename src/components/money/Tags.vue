@@ -32,6 +32,7 @@ export default class Tags extends mixins(Creator) {
       this.selectedTags.splice(0, 1, tag);
     }
     this.$emit("update:value", this.selectedTags[0]);
+
   }
 
 }

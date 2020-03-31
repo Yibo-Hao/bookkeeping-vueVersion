@@ -1,7 +1,10 @@
 <template>
   <ul class="tabs">
-    <li v-for="item in datasource" :key="item.value" @click="select(item)"
-      :class="item.value === data ? 'selected' : '' "
+    <li
+      v-for="item in datasource"
+      :key="item.value"
+      @click="select(item)"
+      :class="item.value === data ? 'selected' : ''"
     >
       {{ item.text }}
     </li>
@@ -53,6 +56,7 @@ export default class Tabs extends Vue {
     }
     &.selected {
       background: $color-yellow;
+      border-bottom: 1px black solid;
     }
   }
 }
