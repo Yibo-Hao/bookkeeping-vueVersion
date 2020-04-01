@@ -1,14 +1,17 @@
 <template>
   <Layout>
     <Types class="stypes" :type.sync="type" />
-    <Tabs class="stags" :data.sync="insideData" />
+    <!--    <Tabs class="stags" :data.sync="insideData" />-->
     <ol>
-      <li v-for="group in result" :key="group.title">
-        <h3 class="title">{{ beautify(group.title) }}</h3>
+      <li v-for="(group, index) in groupedList" :key="index">
+        <h3 class="title">
+          <span>{{ beautify(group.title) }}</span>
+          <span>{{ count(group) }}</span>
+        </h3>
         <ol>
           <li v-for="item in group.items" :key="item.id" class="record">
             <span class="tag">{{ item.tag }}</span>
-            <span>￥{{ item.amount }} </span>
+            <span>{{ item.type }}￥{{ item.amount }} </span>
           </li>
         </ol>
       </li>
@@ -32,21 +35,43 @@ export default class Statistic extends Vue {
   get recordList() {
     return this.$store.state.recordlist as RecordItem[];
   }
-  get result() {
+  get groupedList() {
     const recordList = this.recordList;
-    type Items = RecordItem[];
-    type HashTableValue = { title: string; items: Items };
-    const hashTable: { [key: string]: HashTableValue } = {};
-    //         今天             明天
-    //   record  record   record  record
-    // 今天 record【】 今天 record【】
-    for (let i = 0; i < recordList.length; i++) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const [date, time] = recordList[i].createAt!.split("T");
-      hashTable[date] = hashTable[date] || { title: date, items: [] };
-      hashTable[date].items.push(recordList[i]);
+    if (recordList.length === 0) {
+      return [];
     }
-    return hashTable;
+    const newList = JSON.parse(JSON.stringify(recordList))
+      .filter((r: RecordItem) => r.type === this.type)
+      .sort(
+        (a: RecordItem, b: RecordItem) =>
+          dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf()
+      );
+    const result: result[] = [
+      {
+        title: dayjs(newList[0].createAt).format("YYYY-MM-DD"),
+        items: [newList[0]]
+      }
+    ];
+    for (let i = 1; i < newList.length; i++) {
+      const current = newList[i];
+      const last = result[result.length - 1];
+      if (dayjs(last.title).isSame(dayjs(current.createAt), "day")) {
+        last.items.push(current);
+      } else {
+        result.push({
+          title: dayjs(current.createAt).format("YYYY-MM-DD"),
+          items: [current]
+        });
+      }
+    }
+    return result;
+  }
+  count(group: result) {
+    let total = 0;
+    for (let i = 0; i < group.items.length; i++) {
+      total += group.items[i].amount;
+    }
+    return total;
   }
   beforeCreate() {
     this.$store.commit("fetchRecords");
@@ -54,17 +79,17 @@ export default class Statistic extends Vue {
   beautify(string: string) {
     const day = dayjs(string);
     const now = dayjs();
-    if (day.isSame(now, 'day')) {
-      return '今天';
-    } else if (day.isSame(now.subtract(1, 'day'), 'day')) {
-      console.log('hi');
-      return '昨天';
-    } else if (day.isSame(now.subtract(2, 'day'), 'day')) {
-      return '前天';
-    } else if (day.isSame(now, 'year')) {
-      return day.format('M月D日');
+    if (day.isSame(now, "day")) {
+      return "今天";
+    } else if (day.isSame(now.subtract(1, "day"), "day")) {
+      console.log("hi");
+      return "昨天";
+    } else if (day.isSame(now.subtract(2, "day"), "day")) {
+      return "前天";
+    } else if (day.isSame(now, "year")) {
+      return day.format("M月D日");
     } else {
-      return day.format('YYYY年M月D日');
+      return day.format("YYYY年M月D日");
     }
   }
 }
@@ -90,7 +115,6 @@ export default class Statistic extends Vue {
   background: white;
   @extend %item;
   box-shadow: 0 0 0.3px #d9d9d9;
-
 }
 .tag {
   margin-right: auto;

@@ -31,3 +31,4 @@ type DataSource = {
   text: string;
   value: string;
 };
+type result = { title: string; items: RecordItem[] };

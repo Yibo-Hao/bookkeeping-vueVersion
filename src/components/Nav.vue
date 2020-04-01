@@ -1,18 +1,20 @@
 <template>
   <nav>
-    <router-link to="/labels" class="items" active-class="selected">
-      <Icon name="labels2" />
-      标签
-    </router-link>
-    <router-link to="/money" class="items" active-class="selected">
-      <Icon name="money" />
-      记账
-    </router-link>
+    <div class="wrapper">
+      <router-link to="/labels" class="items" active-class="selected">
+        <Icon name="labels2" />
+        标签
+      </router-link>
+      <router-link to="/money" class="items" active-class="selected">
+        <Icon name="money" />
+        记账
+      </router-link>
 
-    <router-link to="/statistic" class="items" active-class="selected">
-      <Icon name="statistic" />
-      统计
-    </router-link>
+      <router-link to="/statistic" class="items" active-class="selected">
+        <Icon name="statistic" />
+        统计
+      </router-link>
+    </div>
   </nav>
 </template>
 
@@ -24,7 +26,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "src/assets/style/helper.scss";
-nav {
+.wrapper {
   display: flex;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
   flex-direction: row;

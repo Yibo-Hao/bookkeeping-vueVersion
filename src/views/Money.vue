@@ -28,7 +28,7 @@ import store from "@/store";
 const version = window.localStorage.getItem("version") || "0";
 if (version === "0.0.1") {
   store.state.recordlist.forEach(record => {
-    record.createAt = new Date(2020, 0, 1).toISOString();
+    record.createAt = new Date().toISOString();
   });
   window.localStorage.setItem(
     "recordList",
@@ -53,18 +53,17 @@ export default class Money extends Vue {
     type: "-",
     amount: 0
   };
-// 除去tag之外其他的直接同步
+  // 除去tag之外其他的直接同步
   onUpdateTag(value: string) {
     this.record.tag = value;
   }
   saverecord() {
-    store.commit("saveRecord",this.record);
+    store.commit("saveRecord", this.record);
   }
   created() {
     store.commit("fetchRecords");
     store.commit("fetchTags");
   }
-
 }
 </script>
 
