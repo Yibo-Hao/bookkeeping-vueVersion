@@ -5,3 +5,5 @@
 基于Vue，VueRouter，Vuex，TypeScript，scss开发的单页面应用
 
 预览地址如下：
+
+https://yibo-hao.github.io/bookkeeping-vueVersion-dist/#/money
