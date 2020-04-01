@@ -3,6 +3,7 @@ const path = require("path");
 
 module.exports = {
   lintOnSave: false,
+  publicPath: process.env.NODE_ENV === "production" ? "/bookkeeping-vueVersion/" : "/",
   chainWebpack: config => {
     const dir = path.resolve(__dirname, "src/assets/icons");
 
@@ -18,9 +19,8 @@ module.exports = {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     config
       .plugin("svg-sprite")
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       .use(require("svg-sprite-loader/plugin"), [{ plainSprite: true }]);
     config.module.rule("svg").exclude.add(dir); // 其他 svg loader 排除 icons 目录
-
   }
 };
