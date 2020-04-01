@@ -18,4 +18,6 @@ new Vue({
   render: h => h(App)
 }).$mount("#app");
 
-
+if(document.documentElement.clientWidth > 500){
+  window.alert('最好使用手机浏览~')
+}
