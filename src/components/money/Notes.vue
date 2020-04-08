@@ -1,7 +1,7 @@
 <template>
   <div>
     <label class="notes">
-      <span class="name">{{this.fieldName}}:</span>
+      <span class="name">{{fieldName}}:</span>
       <input type="text" v-model="valueInside" :placeholder ="placeHolder" />
     </label>
   </div>
@@ -13,7 +13,7 @@ import { Component, Prop, Watch } from "vue-property-decorator";
 
 @Component
 export default class Notes extends Vue {
-  @Prop({default:''}) readonly value!: string;
+  @Prop({required:true}) readonly value!: string;
   @Prop({required:true}) readonly fieldName!: string;
   @Prop({required:true}) readonly placeHolder!: string;
 

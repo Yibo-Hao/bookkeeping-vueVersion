@@ -59,6 +59,7 @@ export default class Money extends Vue {
   }
   saverecord() {
     store.commit("saveRecord", this.record);
+    window.alert("储存成功~");
   }
   created() {
     store.commit("fetchRecords");
